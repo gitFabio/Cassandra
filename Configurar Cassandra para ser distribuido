@@ -1,0 +1,66 @@
+# Instalação do cassandra
+
+# OBS: Pre-requisito; ter java instalado
+
+# Para instalação do cassandra edita-se o arquivo source_list adicionando a linha:
+# deb http://debian.datastax.com/community stable main
+# Apos isso adiciona-se a chave publica com o comando:
+# curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
+# Feito isso faz um apt-get update e depois o comando apt-get install dsc20 e
+# ira ser instalado o cassandra
+
+
+
+# Configuração do Cassandra foi seguido nesse link:
+ 
+# http://www.datastax.com/documentation/cassandra/2.0/cassandra/initialize/initializeSingleDS.html
+
+# Onde temos a opção de escolher configuração entre um cluster em um unico 
+# data center ou entre multiplos data centers.
+
+# A configuração do cluster em um unico data center, para tanto, edita-se
+# o arquivo cassandra.yaml que fica no diretorio /etc/cassandra/cassamdra.yaml.
+
+# Campos alterados são;
+
+# Nome do cluster
+cluster_name:
+
+# Modifica para 256
+num_tokens:
+
+# Altera-se este campo para org.apache.cassandra.locator.SimpleSeedProvider
+class_name:
+
+# seeds se defini quem vair ser o nodo seed, colocando o IP dos hosts seed
+# Recomenda-se mais de um seed
+seeds:
+
+# Quando é confiugrado o cluster aqui é colocado o IP da propria maquina
+# (não tentei por localhost, mas acredito que funcione)
+listen_address:
+
+# Não lembro o que faz, mas tem que estar com esse valor 
+# GossipingPropertyFileSnitch
+endpoint_snitch:
+
+# OBS: nas maquinas que não são seed são informados os ips das maquinas seed.
+# OBS:todos as maquinas configuradas para o cluster deve ter o mesmo nome.
+# OBS: todas as maquinas no campo listen_address deve ter o IP dela mesmo (acho 
+# que pode ser localhost, mas não testei)
+
+
+# Instalação do OpsCenter
+
+# Para instalação do OPS Center usa-se o camando:
+apt-get install opscenter.
+# A instalação do OPS Center deve ser feito no nodo seed, em apenas um deles, 
+# caso houver mais de um nodo seed.
+
+# Para realmente funcionar os gráficos no OPS Center, todos os nodos que participam
+# do cluster deve ter datastax-agent, para instalar usa-se o comando:
+apt-get install datastax-agent
+
+# Feito isso, inicia-se os novos serviços com os comandos:
+service opscenter start
+service datastax-agent start
