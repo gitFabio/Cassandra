@@ -37,7 +37,6 @@ class_name:
 seeds:
 
 # Quando é confiugrado o cluster aqui é colocado o IP da propria maquina
-# (não tentei por localhost, mas acredito que funcione)
 listen_address:
 
 # Não lembro o que faz, mas tem que estar com esse valor 
@@ -64,3 +63,14 @@ apt-get install datastax-agent
 # Feito isso, inicia-se os novos serviços com os comandos:
 service opscenter start
 service datastax-agent start
+
+# OBS:
+
+# Para que realmente funcione as keyspces distribuidas caso um dos ervidores falhe
+# é necessário que na criação da keyspace o fator de replicação seja maior do
+# que um, pois com o fator de replicação maior do que um o dado será replicado
+# em mais de um host no momento da inserção ou alteração, caso contrário, o fator
+# de replicação seja 1 e o host falhe e mesmo que este dado esteja em outro host
+# o cassandra não ira disponibilizar este dado, pois pode ser um valor totalmente
+# desatulizado.
+
