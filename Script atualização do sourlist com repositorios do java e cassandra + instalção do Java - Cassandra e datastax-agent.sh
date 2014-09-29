@@ -43,6 +43,7 @@ if [ $java = "sim" ];then
 		apt-get install curl
 		echo "Instalado com sucesso"
 
+
 		echo "Adicionando chave publica do Datastax (Cassandra)"
 		curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
 		echo "Chave publica da Datastax adicionada com sucesso"
@@ -61,30 +62,30 @@ if [ $java = "sim" ];then
 			echo "Instalando Cassandra"
 			apt-get install dsc21
 			echo "Cassandra instalado com sucesso"
-
-			# Linha em branco
-			echo 	
-			echo "Instalar o datastax-agent?"
-			echo "sim/nao"
-			read dataS
-			
-			if [ $dataS = "sim" ];then
-				echo "Instalando datastax-agent"
-				apt-get install datastax-agent
-				echo "datastax-agent instalado com sucesso"
-			fi
-
-			# Linha em branco
-			echo 
-			echo "Instalar o OPSCenter?"
-			echo "sim/nao"
-			read opsC
-			
-			if [ $opsC = "sim" ];then
-				echo "Instalando o OPSCenter para gerenciar as maquinas distribuidas do Cassandra"
-				apt-get install opscenter
-				echo "OPSCenter instalado com sucesso"
-			fi
+		fi
+		
+		# Linha em branco
+  	echo 	
+		echo "Instalar o datastax-agent?"
+		echo "sim/nao"
+		read dataS
+	
+		if [ $dataS = "sim" ];then
+			echo "Instalando datastax-agent"
+			apt-get install datastax-agent
+			echo "datastax-agent instalado com sucesso"
+		fi
+		
+		# Linha em branco
+		echo 
+		echo "Instalar o OPSCenter?"
+		echo "sim/nao"
+		read opsC
+		
+		if [ $opsC = "sim" ];then
+			echo "Instalando o OPSCenter para gerenciar as maquinas distribuidas do Cassandra"
+			apt-get install opscenter
+			echo "OPSCenter instalado com sucesso"
 		fi
 	fi
 fi
