@@ -1,0 +1,24 @@
+# Criação da keyspace, no exeplo abaixo ator de replicação 1
+CREATE KEYSPACE demo
+with placement_strategy = 'SimpleStrategy'
+and strategy_options = {replication_factor:1};
+
+# Criação da Column Family
+CREATE COLUMN FAMILY users
+WITH comparator = UTF8Type
+AND key_validation_class=UTF8Type
+AND column_metadata = [
+{column_name: full_name, validation_class: UTF8Type}
+{column_name: email, validation_class: UTF8Type}
+{column_name: state, validation_class: UTF8Type}
+{column_name: gender, validation_class: UTF8Type}
+{column_name: birth_year, validation_class: LongType}
+];
+
+# Exemplo de Inserções
+SET users['bobbyjo']['full_name']='Robert Jones';
+SET users['bobbyjo']['email']='bobjones@gmail.com';
+SET users['bobbyjo']['state']='TX';
+SET users['bobbyjo']['gender']='M';
+SET users['bobbyjo']['birth_year']='1975';
+

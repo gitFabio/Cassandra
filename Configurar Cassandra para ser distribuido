@@ -43,6 +43,10 @@ listen_address:
 # GossipingPropertyFileSnitch
 endpoint_snitch:
 
+# RPC address deve estar com o endereco de IP da maquina
+# caso o IP da maquina seja esse
+rpc_port: 192.168.0.106 
+
 # OBS: nas maquinas que não são seed são informados os ips das maquinas seed.
 # OBS:todos as maquinas configuradas para o cluster deve ter o mesmo nome.
 # OBS: todas as maquinas no campo listen_address deve ter o IP dela mesmo (acho 
