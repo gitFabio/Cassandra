@@ -1,40 +1,79 @@
 echo "Congiguração do source-list com Java + Cassandra"
 
-echo "Adicionando Repositorio Java"
-echo "# Java" >> /etc/apt/sources.list
-echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" >> /etc/apt/sources.list
-echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" >> /etc/apt/sources.list
-echo "Repositorio Java adicionado com sucesso"
+echo "Adicionar repositorio do Java ao sourcelist e instalar?"
+echo "sim/nao"
+read java
 
-echo "Adicionando Repositorio Cassandra - Datastax"
-echo "# Cassandra" >> /etc/apt/sources.list
-echo "deb http://debian.datastax.com/community stable main" >> /etc/apt/sources.list
-echo "Repositorio Datastax adicionado com sucesso"
+if [ $java = "sim" ];then
+	echo "Adicionando Repositorio Java"
+	echo "# Java" >> /etc/apt/sources.list
+	echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" >> /etc/apt/sources.list
+	echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" >> /etc/apt/sources.list
+	echo "Repositorio Java adicionado com sucesso"
 
-echo "Instalando o curl"
-apt-get install curl
-echo "Instalado com sucesso"
+	echo "Adicionando Chave Publica do Java"
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+	echo "Chave público do Java adicionado com sucesso"
 
-echo "Adicionando chave publica do Datastax (Cassandra)"
-curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
-echo "Chave publica da Datastax adicionada com sucesso"
+	echo "Atualizando repositorios"
+	apt-get update
+	echo "Repositorios atualizados"
 
-echo "Adicionando Chave Publica do Java"
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
-echo "Chave público do Java adicionado com sucesso"
+	echo "Instalando Java"
+	apt-get install oracle-java7-installer
+	echo "Java instalado com sucesso"
 
-echo "Atualizando repositorios"
-apt-get update
-echo "Repositorios atualizados"
 
-echo "Instalando Java"
-apt-get install oracle-java7-installer
-echo "Java instalado com sucesso"
 
-echo "Instalando Cassandra"
-apt-get install dsc21
-echo "Cassandra instalado com sucesso"
+	echo "Adicionar o repositorio do cassandra - Datastax?"
+	echo "sim/nao"
+	read repositorioCassandra
 
-echo "Instalando datastax-agent"
-apt-get install datastax-agent
-echo "datastax-agent instalado com sucesso"
+	if [ $repositorioCassandra = "sim" ];then
+		echo "Adicionando Repositorio Cassandra - Datastax"
+		echo "# Cassandra" >> /etc/apt/sources.list
+		echo "deb http://debian.datastax.com/community stable main" >> /etc/apt/sources.list
+		echo "Repositorio Datastax adicionado com sucesso"
+
+		echo "Instalando o curl"
+		apt-get install curl
+		echo "Instalado com sucesso"
+
+		echo "Adicionando chave publica do Datastax (Cassandra)"
+		curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
+		echo "Chave publica da Datastax adicionada com sucesso"
+
+
+
+		echo "Instalar o Cassandra?"
+		echo "sim/nao"
+		read cassandra
+
+		if [ $cassandra = "sim" ];then
+			echo "Instalando Cassandra"
+			apt-get install dsc21
+			echo "Cassandra instalado com sucesso"
+
+			echo "Instalar o datastax-agent?"
+			echo "sim/nao"
+			read dataS
+			
+			if [ $dataS = "sim" ];then
+				echo "Instalando datastax-agent"
+				apt-get install datastax-agent
+				echo "datastax-agent instalado com sucesso"
+			fi
+
+			echo "Instalar o OPSCenter?"
+			echo "sim/nao"
+			read opsC
+			
+			if [ $opsC = "sim" ];then
+				echo "Instalando o OPSCenter para gerenciar as maquinas distribuidas do Cassandra"
+				apt-get install opscenter
+				echo "OPSCenter instalado com sucesso"
+			fi
+		fi
+	fi
+fi
+
